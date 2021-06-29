@@ -2,6 +2,7 @@
 This is a simplified version of a gobang game done with reference to AlphaZero, the board is designed with reference to the author @Junxiao Song, and the framework is based on keras.I also made a graphical interface, so it's more convenient to play Gobang!
 
 ### Requirements
+- Python <= 3.7
 - Tensorflow == 1.15.0
 - Python >= 3.6
 - Numpy >= 1.11
@@ -35,4 +36,4 @@ The input of the strategy value network is the current situation description, an
 
 2.In the training process, especially the process of self-play is too slow, because the neural network layer is relatively simple, does not constitute a bottleneck in speed, after analysis found that only one core of the cpu is used, the subsequent optimization can be multi-core simultaneous work to increase the training speed.
 
-3.In some cases, using the gpu version of tensorflow will cause the gpu to fail to load and cause the program to freeze. The reason has not been found yet, please use the version without gpu
+3.In some cases, using the gpu version of tensorflow will cause the gpu to fail to load and cause the program to freeze. The reason may be related to the high python version, please use the tensorflow version without gpu and Python version under 3.7.
