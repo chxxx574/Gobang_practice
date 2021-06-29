@@ -1,7 +1,7 @@
 from collections import deque
 class Conf:
-    board_width = 15
-    board_height = 15
+    board_width = 8
+    board_height = 8
     n_in_row = 5
     learn_rate = 2e-3
     l2_const = 1e-4
@@ -21,4 +21,4 @@ class Conf:
     best_win_ratio = 0.0
     pure_mcts_playout_num = 1000
     init_model=None # start training from an initial policy-value net or not
-    model_file= 'best_policy_15.model'
+    model_file= 'best_policy_8.model'
