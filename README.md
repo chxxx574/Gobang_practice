@@ -2,6 +2,7 @@
 This is a simplified version of a gobang game done with reference to AlphaZero, the board is designed with reference to the author @author: Junxiao Song, and the framework is based on keras.I also made a graphical interface, so it's more convenient to play Gobang!
 
 ### Requirements
+- Tensorflow == 1.15.0
 - Python >= 3.6
 - Numpy >= 1.11
 - keras == 2.0.5
