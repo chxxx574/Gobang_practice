@@ -31,4 +31,5 @@ The input of the strategy value network is the current situation description, an
 
 ### Deficiencies and parts that can be optimized later
 1.The model performs well on a 8x8 board and poorly on a 15x15 board even after 3000 rounds of training.I think the main reason is that the size of the board determines the number of past moves to be taken into account, and since this simple model only uses data from the most recent move, it does not perform well on larger boards, increasing the number of rounds using history should improve this problem.
+
 2.In the training process, especially the process of self-play is too slow, because the neural network layer is relatively simple, does not constitute a bottleneck in speed, after analysis found that only one core of the cpu is used, the subsequent optimization can be multi-core simultaneous work to increase the training speed
