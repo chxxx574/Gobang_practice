@@ -11,9 +11,10 @@ import numpy as np
 import pickle
 from config import Conf
 
+
 class PolicyValueNet():
 
-    def __init__(self,model_file=None):
+    def __init__(self, model_file=None):
         self.board_width = Conf.board_width
         self.board_height = Conf.board_height
         self.l2_const = Conf.l2_const  # coef of l2 penalty

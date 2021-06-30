@@ -5,6 +5,7 @@ from mcts_alphaZero import MCTSPlayer
 from policy import PolicyValueNet
 from config import Conf
 
+
 def run():
     policy_param = Conf.model_file
     best_policy = PolicyValueNet(policy_param)

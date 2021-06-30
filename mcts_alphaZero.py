@@ -21,17 +21,17 @@ class TreeNode(object):
         self._P = prior_p
 
     def expand(self, action_priors):
-       for action, prob in action_priors:
+        for action, prob in action_priors:
             if action not in self._children:
                 self._children[action] = TreeNode(self, prob)
 
     def select(self, c_puct):
-       return max(self._children.items(),
+        return max(self._children.items(),
                    key=lambda act_node: act_node[1].get_value(c_puct))
 
     def update(self, leaf_value):
-       self._n_visits += 1
-       self._Q += 1.0*(leaf_value - self._Q) / self._n_visits
+        self._n_visits += 1
+        self._Q += 1.0 * (leaf_value - self._Q) / self._n_visits
 
     def update_recursive(self, leaf_value):
         if self._parent:
@@ -60,7 +60,7 @@ class MCTS(object):
 
     def _playout(self, state):
         node = self._root
-        while(1):
+        while (1):
             if node.is_leaf():
                 break
             action, node = node.select(self._c_puct)
@@ -88,7 +88,7 @@ class MCTS(object):
         act_visits = [(act, node._n_visits)
                       for act, node in self._root._children.items()]
         acts, visits = zip(*act_visits)
-        act_probs = softmax(1.0/temp * np.log(np.array(visits) + 1e-10))
+        act_probs = softmax(1.0 / temp * np.log(np.array(visits) + 1e-10))
 
         return acts, act_probs
 
@@ -118,14 +118,14 @@ class MCTSPlayer(object):
 
     def get_action(self, board, temp=1e-3, return_prob=0):
         sensible_moves = board.availables
-        move_probs = np.zeros(board.width*board.height)
+        move_probs = np.zeros(board.width * board.height)
         if len(sensible_moves) > 0:
             acts, probs = self.mcts.get_move_probs(board, temp)
             move_probs[list(acts)] = probs
             if self._is_selfplay:
                 move = np.random.choice(
                     acts,
-                    p=0.75*probs + 0.25*np.random.dirichlet(0.3*np.ones(len(probs)))
+                    p=0.75 * probs + 0.25 * np.random.dirichlet(0.3 * np.ones(len(probs)))
                 )
                 self.mcts.update_with_move(move)
             else:

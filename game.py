@@ -1,6 +1,8 @@
 import numpy as np
 import tkinter as tk
 import tkinter.messagebox
+
+
 class Board(object):
     """board for the game"""
 
@@ -84,7 +86,7 @@ class Board(object):
         n = self.n_in_row
 
         moved = list(set(range(width * height)) - set(self.availables))
-        if len(moved) < self.n_in_row *2-1:
+        if len(moved) < self.n_in_row * 2 - 1:
             return False, -1
 
         for m in moved:
@@ -216,18 +218,19 @@ class Game(object):
                         print("Game end. Tie")
                 return winner, zip(states, mcts_probs, winners_z)
 
+
 class GUI_interface(object):
-    def __init__(self,width,height,n,player,start_player=1):
+    def __init__(self, width, height, n, player, start_player=1):
         self.board = Board(width=width, height=height, n_in_row=n)
         self.game = Game(self.board)
         self.start_player = start_player
-        self.board.init_board(start_player-1)
+        self.board.init_board(start_player - 1)
         self.player = player
         p1, p2 = self.board.players
         player.set_player_ind(p1)
-        self.filenum=1
-        self.row=self.board.width
-        self.column=self.board.height
+        self.filenum = 1
+        self.row = self.board.width
+        self.column = self.board.height
         self._playboard = tk.Tk()
         self._playboard.title('GOBANG')
         self._playboard.geometry("650x700")
@@ -250,11 +253,11 @@ class GUI_interface(object):
         for j in range(self.column + 1):
             self._canvas.create_line(i * (800 / self.column), 0, i * (800 / self.column), 800, fill='gray')
 
-        self._restart_button = tk.Button(self._playboard,text='Restart',font=('Helvetica', 12),command=self.restart)
+        self._restart_button = tk.Button(self._playboard, text='Restart', font=('Helvetica', 12), command=self.restart)
         self._restart_button.grid(row=2, column=0, padx=10, pady=5, sticky=tk.W)
-        self._title = tk.Label(self._playboard, text='[MCTS_ALPHA_ZERO]   VS   [HUAMN]', font=('Helvetica', 12,'bold'))
-        self._title.grid(row=2, column=1, padx=10, pady=10,sticky=tk.S)
-        self._exit_button = tk.Button(self._playboard, text='Exit', font=('Helvetica', 12),command=self.destroy)
+        self._title = tk.Label(self._playboard, text='[MCTS_ALPHA_ZERO]   VS   [HUAMN]', font=('Helvetica', 12, 'bold'))
+        self._title.grid(row=2, column=1, padx=10, pady=10, sticky=tk.S)
+        self._exit_button = tk.Button(self._playboard, text='Exit', font=('Helvetica', 12), command=self.destroy)
         self._exit_button.grid(row=2, column=2, padx=10, pady=5, sticky=tk.E)
 
         self._playboard.rowconfigure(0, weight=0)
@@ -269,8 +272,9 @@ class GUI_interface(object):
             self.board.do_move(move)
             self._draw_all()
             self._player['text'] = f'Turn: Player{self.get_turn()}'
+
     def _on_canvas_clicked(self, event: tk.Event) -> None:
-        self._player['text']=f'Turn: Player{self.get_turn()}'
+        self._player['text'] = f'Turn: Player{self.get_turn()}'
         pixel_width = self._canvas.winfo_width()
         pixel_height = self._canvas.winfo_height()
 
@@ -279,7 +283,7 @@ class GUI_interface(object):
         ny = int(event.y / (pixel_height / self.row))
         correcty = (ny * 2 + 1) * (pixel_height / self.row / 2.0)
         try:
-            move = self.board.location_to_move((self.row-1-ny, nx))
+            move = self.board.location_to_move((self.row - 1 - ny, nx))
             self.board.do_move(move)
             self._draw_all()
             # im = ImageGrab.grab()
@@ -297,9 +301,10 @@ class GUI_interface(object):
             self.destroy()
         else:
             self._player['text'] = f'Turn: Player{self.get_turn()}'
+
     def play_against(self, event: tk.Event):
         end, winner = self.board.game_end()
-        if end==False:
+        if end == False:
             self._player['text'] = f'Turn: Player{self.get_turn()}'
             move = self.player.get_action(self.board)
             self.board.do_move(move)
@@ -317,6 +322,7 @@ class GUI_interface(object):
                 self.destroy()
             else:
                 self._player['text'] = f'Turn: Player{self.get_turn()}'
+
     def _draw_all(self) -> None:
         self._canvas.delete(tk.ALL)
         pixel_width = self._canvas.winfo_width()
@@ -333,22 +339,23 @@ class GUI_interface(object):
                 loc = i * c + j
                 p = self.board.states.get(loc, -1)
                 if p != -1:
-                    ny,nx=self.board.move_to_location(loc)
-                    ny=self.row-1-ny
+                    ny, nx = self.board.move_to_location(loc)
+                    ny = self.row - 1 - ny
                     x = (nx * 2 + 1) * (pixel_width / self.column / 2.0)
                     y = (ny * 2 + 1) * (pixel_height / self.row / 2.0)
                     topleft_pixel_x, topleft_pixel_y = (x - onex * 0.65, y - oney * 0.65)
                     bottomright_pixel_x, bottomright_pixel_y = (x + onex * 0.65, y + oney * 0.65)
-                    if p==1:
+                    if p == 1:
                         self._canvas.create_oval(
                             topleft_pixel_x, topleft_pixel_y,
                             bottomright_pixel_x, bottomright_pixel_y,
                             fill='black', outline='white')
-                    elif p==2:
+                    elif p == 2:
                         self._canvas.create_oval(
                             topleft_pixel_x, topleft_pixel_y,
                             bottomright_pixel_x, bottomright_pixel_y,
                             fill='white', outline='black')
+
     def _on_canvas_resized(self, event: tk.Event) -> None:
         self._draw_all()
 
@@ -357,8 +364,10 @@ class GUI_interface(object):
 
     def destroy(self):
         self._playboard.destroy()
+
     def run(self):
         self._playboard.mainloop()
+
     def restart(self):
         self.board.init_board(self.start_player - 1)
         self._player['text'] = f'Turn: Player{self.get_turn()}'

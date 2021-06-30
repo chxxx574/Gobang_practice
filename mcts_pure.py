@@ -10,7 +10,7 @@ def rollout_policy_fn(board):
 
 
 def policy_value_fn(board):
-    action_probs = np.ones(len(board.availables))/len(board.availables)
+    action_probs = np.ones(len(board.availables)) / len(board.availables)
     return zip(board.availables, action_probs), 0
 
 
@@ -35,7 +35,7 @@ class TreeNode(object):
 
     def update(self, leaf_value):
         self._n_visits += 1
-        self._Q += 1.0*(leaf_value - self._Q) / self._n_visits
+        self._Q += 1.0 * (leaf_value - self._Q) / self._n_visits
 
     def update_recursive(self, leaf_value):
         if self._parent:
@@ -64,9 +64,8 @@ class MCTS(object):
 
     def _playout(self, state):
         node = self._root
-        while(1):
+        while (1):
             if node.is_leaf():
-
                 break
             action, node = node.select(self._c_puct)
             state.do_move(action)
