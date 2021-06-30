@@ -7,7 +7,7 @@ class Conf:
     l2_const = 1e-4
     lr_multiplier = 1.0
     temp = 1.0
-    n_playout = 4000
+    n_playout = 400 #Number of simulations per move in the real game
     episode_len=0
     c_puct = 5
     buffer_size = 10000
@@ -21,4 +21,4 @@ class Conf:
     best_win_ratio = 0.0
     pure_mcts_playout_num = 1000
     init_model=None # start training from an initial policy-value net or not
-    model_file= 'best_policy_8.model'
+    model_file= 'best_policy_8.model'#for the 8x8 board

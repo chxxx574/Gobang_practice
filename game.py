@@ -215,6 +215,7 @@ class Game(object):
                     else:
                         print("Game end. Tie")
                 return winner, zip(states, mcts_probs, winners_z)
+
 class GUI_interface(object):
     def __init__(self,width,height,n,player,start_player=1):
         self.board = Board(width=width, height=height, n_in_row=n)

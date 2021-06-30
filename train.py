@@ -20,8 +20,6 @@ mcts_player = MCTSPlayer(policy_value_net.policy_value_fn,c_puct=Conf.c_puct,n_p
 
 
 def get_equi_data(play_data):
-    """augment the data set by rotation and flipping
-    """
     extend_data = []
     for state, mcts_porb, winner in play_data:
         for i in [1, 2, 3, 4]:
@@ -35,7 +33,6 @@ def get_equi_data(play_data):
 
 
 def collect_selfplay_data(n_games=1):
-    """collect self-play data for training"""
     for i in range(n_games):
         winner, play_data =game.start_self_play(mcts_player,temp=Conf.temp)
         play_data = list(play_data)[:]
@@ -46,7 +43,6 @@ def collect_selfplay_data(n_games=1):
 
 
 def policy_update():
-    """update the policy-value net"""
     mini_batch = random.sample(Conf.data_buffer, Conf.batch_size)
     state_batch = [data[0] for data in mini_batch]
     mcts_probs_batch = [data[1] for data in mini_batch]
@@ -63,7 +59,6 @@ def policy_update():
                      )
         if kl > Conf.kl_targ * 4:  # early stopping if D_KL diverges badly
             break
-    # adaptively adjust the learning rate
     if kl > Conf.kl_targ * 2 and Conf.lr_multiplier > 0.1:
         Conf.lr_multiplier /= 1.5
     elif kl < Conf.kl_targ / 2 and Conf.lr_multiplier < 10:
