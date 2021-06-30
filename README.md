@@ -13,7 +13,7 @@ To play with provided models, run the following script from the directory:
 ```
 python play.py  
 ```
-You may modify play.py to try different provided models or the pure MCTS.
+You may modify config.py to try different settlement.
 
 To train the AI model directly run:   
 ```
