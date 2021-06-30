@@ -1,4 +1,5 @@
 ## gobang based on a simplified AlphaZero model
+これを金子先生に読んでもらえれば、とても嬉しいです。急いで書いたので、バグがあるかもしれませんので、ご容赦ください
 This is a simplified version of a gobang game done with reference to AlphaZero, the board is designed with reference to the author @Junxiao Song, and the framework is based on keras.I also made a graphical interface, so it's more convenient to play Gobang!
 
 ### Requirements
